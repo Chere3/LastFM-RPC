@@ -320,6 +320,13 @@
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.3.tgz#472eaab5f15c1ffdd7f8628bd4c4f753995ec79e"
   integrity sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==
 
+"@types/discord-rich-presence@^0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@types/discord-rich-presence/-/discord-rich-presence-0.0.0.tgz#e9205655fc60753a14b362bf9f933ee146106604"
+  integrity sha512-lOQBfiJXgxl1xkQ5Wmn7HsbFhH97+GCh0/NqVIY4E0GZEIcZZmcbPuxopwuFbOo004AxUkBMLsk22ntpsm/Xfw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.4.tgz#8467d4b3c087805d63580480890791277ce35c44"
@@ -832,10 +839,16 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-discord-rpc@^4.0.1:
+discord-rich-presence@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/discord-rich-presence/-/discord-rich-presence-0.0.8.tgz#7a2b41ff87a278e8a2c8835cd91c9890d6b9fbdd"
+  integrity sha512-IpVMPjv15C9UvppxvrrGdv6bzQHOW1P1vLoMH15HvdJwGJ3dBd2bnrJ63Uy36YRUfrAMxGLiwUDHncvC8AuPaQ==
+  dependencies:
+    discord-rpc "github:discordjs/rpc"
+
+"discord-rpc@github:discordjs/rpc":
   version "4.0.1"
-  resolved "https://registry.yarnpkg.com/discord-rpc/-/discord-rpc-4.0.1.tgz#a89aa04a048aa83ad4f347d53fa0162501eae0d8"
-  integrity sha512-HOvHpbq5STRZJjQIBzwoKnQ0jHplbEWFWlPDwXXKm/bILh4nzjcg7mNqll0UY7RsjFoaXA7e/oYb/4lvpda2zA==
+  resolved "https://codeload.github.com/discordjs/rpc/tar.gz/9e7de2a6d917591f10a66389e62e1dc053c04fec"
   dependencies:
     node-fetch "^2.6.1"
     ws "^7.3.1"
@@ -855,6 +868,11 @@ dot-prop@^5.1.0:
   integrity sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==
   dependencies:
     is-obj "^2.0.0"
+
+dotenv@^16.0.3:
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
+  integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
 
 dynamic-dedupe@^0.3.0:
   version "0.3.0"
