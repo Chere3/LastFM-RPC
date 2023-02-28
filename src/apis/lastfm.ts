@@ -80,7 +80,6 @@ export class LastFmApi {
 		if (JSON.stringify(data).includes('error')) {
 			throw Error('Ha ocurrido un eror tratando de obtener el usuario');
 		}
-
 		return data;
 	}
 
