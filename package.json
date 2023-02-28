@@ -16,7 +16,8 @@
     "@types/discord-rich-presence": "^0.0.0",
     "discord-rich-presence": "^0.0.8",
     "dotenv": "^16.0.3",
-    "eslint": ">=8.0.0"
+    "eslint": ">=8.0.0",
+    "node-cache": "^5.1.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
