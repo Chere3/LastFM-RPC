@@ -13,10 +13,10 @@ Create the definitive Last.fm Discord Rich Presence experience — seamless, rel
 ## 🏃 Quick Wins (1-2 weeks)
 
 ### Documentation
-- [ ] Add English version of README
-- [ ] Create `.env.example` with configuration options
-- [ ] Add troubleshooting guide
-- [ ] Document all configuration options
+- [x] Add English version of README
+- [x] Create `.env.example` with configuration options
+- [x] Add troubleshooting guide
+- [x] Document all configuration options
 
 ### Code Quality
 - [ ] Strict TypeScript mode compliance
