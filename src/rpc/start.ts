@@ -2,6 +2,7 @@
 import createClient from 'discord-rich-presence';
 import NodeCache from 'node-cache';
 import {LastFmApi, type Final, type Track, type TrackInformation} from '../apis/lastfm';
+import {logError, logInfo, logWarn} from '../utils';
 
 export class LastFmPrincipal {
 	id: number | string;
@@ -10,17 +11,25 @@ export class LastFmPrincipal {
 	}
 
 	async start() {
-		// All info modules.
 		const cache = new NodeCache();
 		const client = createClient(String(this.id));
 
+		await this.safeMainProcess(client, cache);
 		setInterval(() => {
-			this.mainProcess(client, cache);
+			void this.safeMainProcess(client, cache);
 		}, 6000);
 	}
 
+	private async safeMainProcess(client: createClient.RP, cache: NodeCache) {
+		try {
+			await this.mainProcess(client, cache);
+		} catch (error) {
+			logError('Main process iteration failed. Retrying on next cycle.', error);
+		}
+	}
+
 	async getListeningSong() {
-		console.log(`🎶 | Obteniendo canción escuchandose...`);
+		logInfo('Fetching currently playing track...');
 		// Fetching the lastfm data to be recollected.
 		const data = await new LastFmApi({
 			apiKey: process.env.API_KEY!,
@@ -29,10 +38,10 @@ export class LastFmPrincipal {
 
 		const song = data.recenttracks.track.find(x => x['@attr']?.nowplaying == 'true');
 
-		console.log(
+		logInfo(
 			song === undefined
-				? '🎶 | No hay ninguna canción escuchandose en este momento...'
-				: `🎧| Canción escuchandose - ${song.name} de ${song.artist['#text']}`,
+				? 'No track is currently playing.'
+				: `Now playing: ${song.name} by ${song.artist['#text']}`
 		);
 
 		// Get the actual song datos.data.
@@ -41,24 +50,22 @@ export class LastFmPrincipal {
 	}
 
 	async getLastSongListened() {
-		console.log(`🎶| Buscando ultima canción escuchada...`);
+		logInfo('Fetching last listened track...');
 		const data = await new LastFmApi({
 			apiKey: process.env.API_KEY!,
 			apiSecret: process.env.API_SECRET!,
 		}).getTracks(process.env.USER!);
 
-		console.log(
-			data === undefined
-				? ''
-				: `🎧| Ultima canción escuchada - ${data.recenttracks.track[0].name} de ${data.recenttracks.track[0].artist['#text']}`,
-		);
+		if (data !== undefined) {
+			logInfo(`Last listened: ${data.recenttracks.track[0].name} by ${data.recenttracks.track[0].artist['#text']}`);
+		}
 
 		// Get the last song
 		return {song: data.recenttracks.track[0], data};
 	}
 
 	async getCompleteSongInformation() {
-		console.log('🎶| Buscando canción reproduciendose...');
+		logInfo('Resolving complete song information...');
 		try {
 			const info = await this.getListeningSong();
 			let track;
@@ -71,19 +78,18 @@ export class LastFmPrincipal {
 					info.song?.name ?? 'dont_found',
 				);
 
-			console.log(
+			logInfo(
 				info.song === undefined
-					? '⚠️| No se ha encontrado música reproduciendose.'
-					: `🎶| Reproduciendo ahora ${info.song.name} de ${info.song.artist['#text']} ${
-							track?.track.duration === '0'
-								? ''
-								: `[${toSongFormat(Number(track?.track.duration))}]`
-					  }`,
+					? 'No active track found.'
+					: `Playing ${info.song.name} by ${info.song.artist['#text']} ${
+						track?.track.duration === '0' ? '' : `[${toSongFormat(Number(track?.track.duration))}]`
+					}`
 			);
 
 			return {track, ...info};
-		} catch (e) {
-			console.log('🌋| Error encontrado tratando de encontrar la música, intentando de nuevo..');
+		} catch (error) {
+			logWarn('Error while resolving current music. Will retry automatically.');
+			logError('Track resolution error details', error);
 		}
 	}
 
@@ -108,7 +114,7 @@ export class LastFmPrincipal {
 				datos.track?.track?.duration === '0'
 					? undefined
 					: Date.now() + Number(datos.track?.track.duration);
-			console.log(`🍰 | Se ha modificado la rich presence a la canción actualmente escuchada.`);
+			logInfo('Rich presence updated with now-playing track.');
 			return client.updatePresence({
 				details: `🎧 Escuchando: ${data.song?.name ?? 'No encontrado'}`,
 				state: `👩🏿‍🎨 De: ${data.song?.artist['#text'] ?? 'No encontrado'}`,
@@ -118,7 +124,7 @@ export class LastFmPrincipal {
 			});
 		} else {
 			const datos = data as {song: Track | undefined; data: Record<'recenttracks', Final>};
-			console.log(`🍰 | Se ha modificado la rich presence a la ultima canción.`);
+			logInfo('Rich presence updated with last listened track.');
 			return client.updatePresence({
 				details: `🎧 Última canción escuchada: ${datos.song?.name}`,
 				state: `🍰 De: ${data.song?.artist['#text']}`,
