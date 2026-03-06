@@ -189,7 +189,9 @@ LastFM-RPC es un cliente de Discord Rich Presence que se sincroniza con tu cuent
 
 ## Contributing
 
-See [ROADMAP.md](./ROADMAP.md) for planned features and improvements.
+- Contribution guide: [CONTRIBUTING.md](./CONTRIBUTING.md)
+- Product direction: [ROADMAP.md](./ROADMAP.md)
+- CI quality gate: `.github/workflows/quality.yml`
 
 ## License
 
