@@ -14,4 +14,7 @@ process.emitWarning = (warning, ...args) => {
 	return emitWarning(warning, ...(args as any));
 };
 
-new LastFmPrincipal(process.env.CLIENT_ID!).start().catch(() => ({}));
+new LastFmPrincipal(process.env.CLIENT_ID!).start().catch(error => {
+	console.error('Failed to start LastFM RPC', error);
+	process.exitCode = 1;
+});

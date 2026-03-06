@@ -5,6 +5,7 @@ import {LastFmApi, type Final, type Track, type TrackInformation} from '../apis/
 
 export class LastFmPrincipal {
 	id: number | string;
+	private inFlight = false;
 	constructor(id: string) {
 		this.id = id;
 	}
@@ -14,8 +15,19 @@ export class LastFmPrincipal {
 		const cache = new NodeCache();
 		const client = createClient(String(this.id));
 
+		const cycle = async () => {
+			if (this.inFlight) return;
+			this.inFlight = true;
+			try {
+				await this.mainProcess(client, cache);
+			} finally {
+				this.inFlight = false;
+			}
+		};
+
+		await cycle();
 		setInterval(() => {
-			this.mainProcess(client, cache);
+			void cycle();
 		}, 6000);
 	}
 
@@ -78,7 +90,7 @@ export class LastFmPrincipal {
 							track?.track.duration === '0'
 								? ''
 								: `[${toSongFormat(Number(track?.track.duration))}]`
-					  }`,
+						}`,
 			);
 
 			return {track, ...info};
@@ -95,7 +107,7 @@ export class LastFmPrincipal {
 					song: Track | undefined;
 					data: Record<'recenttracks', Final>;
 					track: Record<'track', TrackInformation>;
-			  },
+				}, 
 		context: 'actual' | 'past' = 'actual',
 	) {
 		if (context == 'actual') {
