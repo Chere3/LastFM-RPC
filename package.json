@@ -5,8 +5,9 @@
 	"scripts": {
 		"dev": "yarn ts-node-dev --respawn --transpile-only ./src/index.ts dev",
 		"start": "tsc -p tsconfig.json && node ./dist/index.js",
-		"lint": "npx eslint src/",
-		"build": "tsc -p tsconfig.json"
+		"lint": "eslint \"src/**/*.ts\"",
+		"build": "tsc -p tsconfig.json",
+		"typecheck": "tsc -p tsconfig.json --noEmit"
 	},
 	"main": "dist/index.js",
 	"author": "Cheree",

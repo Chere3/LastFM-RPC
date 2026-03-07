@@ -73,7 +73,7 @@ export class LastFmApi {
 
 	async getTracks(user: string, limit = 10) {
 		const info = await fetch(
-			`http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${user}&api_key=${this.configuration.apiKey}&format=json&limit=${limit}`,
+			`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${user}&api_key=${this.configuration.apiKey}&format=json&limit=${limit}`,
 		);
 
 		const data = (await info.json()) as Record<'recenttracks', Final>;
@@ -85,7 +85,7 @@ export class LastFmApi {
 
 	async getTrackInfo(artist: string, song: string) {
 		const info = await fetch(
-			`http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${this.configuration.apiKey}&track=${song}&artist=${artist}&format=json`,
+			`https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${this.configuration.apiKey}&track=${song}&artist=${artist}&format=json`,
 		);
 
 		const data = (await info.json()) as Record<'track', TrackInformation>;
