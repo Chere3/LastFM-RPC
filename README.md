@@ -82,6 +82,15 @@ LastFM-RPC is a Discord Rich Presence client that syncs with your Last.fm accoun
 | `API_SECRET` | ✅ | Your Last.fm API secret |
 | `USER` | ✅ | Your Last.fm username |
 | `CLIENT_ID` | ✅ | Discord application ID |
+| `POLL_INTERVAL_MS` | ❌ | Polling interval in milliseconds (default: 6000, min: 3000) |
+
+### Quality checks
+
+```bash
+yarn check
+```
+
+This runs lint + typecheck + build locally, the same quality gate used in CI.
 
 ### Troubleshooting
 
