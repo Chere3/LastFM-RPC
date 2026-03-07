@@ -74,6 +74,16 @@ LastFM-RPC is a Discord Rich Presence client that syncs with your Last.fm accoun
    # or: npm start
    ```
 
+### Quality Gates
+
+Run these checks before opening a PR:
+
+```bash
+yarn lint
+yarn typecheck
+yarn build
+```
+
 ### Configuration
 
 | Variable | Required | Description |
@@ -190,6 +200,8 @@ LastFM-RPC es un cliente de Discord Rich Presence que se sincroniza con tu cuent
 ## Contributing
 
 See [ROADMAP.md](./ROADMAP.md) for planned features and improvements.
+
+For contribution workflow and PR checklist, see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## License
 

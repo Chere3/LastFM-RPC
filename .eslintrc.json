@@ -1,16 +1,24 @@
 {
-	"env": {
-		"browser": true,
-		"es2021": true
-	},
-	"overrides": [
-		{
-			"files": ["*.ts", "*.tsx"]
-		}
-	],
-	"parserOptions": {
-		"ecmaVersion": "latest",
-		"sourceType": "module"
-	},
-	"rules": {}
+  "env": {
+    "node": true,
+    "es2021": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "ignorePatterns": [
+    "dist/"
+  ],
+  "rules": {
+    "no-mixed-spaces-and-tabs": "off"
+  }
 }
